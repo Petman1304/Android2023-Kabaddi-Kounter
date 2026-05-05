@@ -2,6 +2,7 @@ package com.example.kabaddikounter
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +19,7 @@ import com.example.kabaddikounter.database.AppDatabase
 import com.example.kabaddikounter.databinding.ActivityMainBinding
 import com.example.kabaddikounter.datasource.ScoreLocalSource
 import com.example.kabaddikounter.repository.ScoreRepository
+import com.example.kabaddikounter.service.LiveScoreService
 import com.example.kabaddikounter.ui.ScoreAdapter
 import com.example.kabaddikounter.viewModels.ScoreViewModel
 import com.example.kabaddikounter.viewModels.ViewModelFactory
@@ -75,6 +77,11 @@ class MainActivity : AppCompatActivity() {
             viewModel.onToastShown()
 
         }
+        }
+
+        Intent(applicationContext, LiveScoreService::class.java).also {
+            it.action = LiveScoreService.Action.START.toString()
+            startService(it)
         }
     }
 

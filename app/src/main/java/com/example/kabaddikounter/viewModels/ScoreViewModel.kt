@@ -39,14 +39,14 @@ class ScoreViewModel(private val sharedPreferences: SharedPreferences, private v
 
     lateinit var allScore: LiveData<List<Score>>
 
-    val teamA = MutableLiveData<String>("Team C")
-    val teamB = MutableLiveData<String>("Team D")
+    val teamA = repository.teamA
+    val teamB = repository.teamB
 
-    private val _scoreA = MutableLiveData<Int>(0)
+    private val _scoreA = repository.scoreA
     val scoreA: LiveData<Int>
         get() = _scoreA
 
-    private val _scoreB = MutableLiveData<Int>(0)
+    private val _scoreB = repository.scoreB
     val scoreB: LiveData<Int>
         get() = _scoreB
 
