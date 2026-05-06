@@ -13,7 +13,7 @@ import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
+//import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.delay
 import androidx.core.content.edit
