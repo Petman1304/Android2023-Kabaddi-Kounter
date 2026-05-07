@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.kabaddikounter.MyApplication
@@ -34,6 +35,13 @@ class HomeFragment : Fragment() {
 
         binding.viewModel = homeViewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
+        homeViewModel.toastMessage.observe(viewLifecycleOwner) {
+            message -> message?.let{
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            homeViewModel.onToastShown()
+        }
+        }
 
 
         return binding.root

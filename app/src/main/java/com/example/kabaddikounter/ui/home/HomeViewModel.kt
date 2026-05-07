@@ -17,6 +17,9 @@ class HomeViewModel(scoreRepository: ScoreRepository) : ViewModel() {
     val teamA = MutableLiveData<String>("Team A")
     val teamB = MutableLiveData<String>("Team B")
 
+    private val _toastMessage = MutableLiveData<String?>()
+    val toastMessage: LiveData<String?> get() = _toastMessage
+
     private val _scoreA = MutableLiveData<Int>(0)
     val scoreA:LiveData<Int> get() = _scoreA
 
@@ -51,5 +54,10 @@ class HomeViewModel(scoreRepository: ScoreRepository) : ViewModel() {
         withContext(Dispatchers.IO){
             repository.insertScore(score)
         }
+        _toastMessage.value = "Score saved to history!"
+    }
+
+    fun onToastShown(){
+        _toastMessage.value = null
     }
 }
