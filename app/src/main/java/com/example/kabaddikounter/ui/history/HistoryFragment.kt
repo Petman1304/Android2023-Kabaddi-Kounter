@@ -5,9 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.compose.ui.window.application
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.kabaddikounter.MyApplication
 import com.example.kabaddikounter.databinding.FragmentHistoryBinding
+import com.example.kabaddikounter.repository.ScoreRepository
+import com.example.kabaddikounter.ui.ScoreAdapter
 
 class HistoryFragment : Fragment() {
 
@@ -22,16 +27,29 @@ class HistoryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val historyViewModel =
-            ViewModelProvider(this).get(HistoryViewModel::class.java)
+//        val historyViewModel =
+//            ViewModelProvider(this).get(HistoryViewModel::class.java)
+
+        val historyViewModel = ViewModelProvider(requireActivity(), HistoryViewModelFactory((requireActivity().application  as MyApplication).scoreRepository)).get(HistoryViewModel::class.java)
+
 
         _binding = FragmentHistoryBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textDashboard
-        historyViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        val scoreAdapter = ScoreAdapter(requireContext())
+
+        binding.viewModel = historyViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
+        binding.scoreRecyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = scoreAdapter
         }
+
+        historyViewModel.allScore.observe(viewLifecycleOwner){
+            scores -> scoreAdapter.submitList(scores)
+        }
+
         return root
     }
 

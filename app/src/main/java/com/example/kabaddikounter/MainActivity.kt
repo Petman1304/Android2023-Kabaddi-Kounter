@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity() {
             (application as MyApplication).scoreRepository)
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -75,16 +76,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        val scoreAdapter = ScoreAdapter(this)
 
-//        binding.scoreRecyclerView.apply {
-//            layoutManager = LinearLayoutManager(this@MainActivity)
-//            adapter = scoreAdapter
-//        }
-//
-//        viewModel.allScore.observe(this){
-//            scores -> scoreAdapter.submitList(scores)
-//        }
 //
 //        sharedPreferences = getSharedPreferences("DarkMode", Context.MODE_PRIVATE)
 //

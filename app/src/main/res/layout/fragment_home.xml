@@ -183,39 +183,14 @@
         app:layout_constraintTop_toBottomOf="@+id/buttonReset"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/switchBtn"/>
-
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/switchBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/scoreRecyclerView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView3"
-        />
-<!--    android:checked="@={viewModel.darkMode}"-->
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/scoreRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/switchBtn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/saveFileButton"/>
 
-    <Button
-        android:id="@+id/saveFileButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Save as Json"
-        app:layout_constraintTop_toBottomOf="@id/scoreRecyclerView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-<!--    android:onClick="@{() -> viewModel.writeToJsonFile()}"-->
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
