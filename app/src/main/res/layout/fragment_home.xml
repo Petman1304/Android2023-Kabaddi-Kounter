@@ -132,11 +132,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Save Score"
+        android:onClick="@{() -> viewModel.insertScore()}"
         app:layout_constraintBottom_toTopOf="@id/buttonReset"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/buttonTeamB2" />
-<!--    android:onClick="@{() -> viewModel.insertScore()}"-->
 
 
     <Button

@@ -102,19 +102,7 @@ class ScoreViewModel(private val sharedPreferences: SharedPreferences, private v
 
 
 
-    fun insertScore() = viewModelScope.launch {
-        val score = Score(
-            teamId = 0,
-            teamAName = teamA.value.toString(),
-            teamBName = teamB.value.toString(),
-            teamAScore = scoreA.value,
-            teamBScore = scoreB.value,
-            timestamp = null,
-        )
-        withContext(Dispatchers.IO){
-            repository.insertScore(score)
-        }
-    }
+
 
 
     fun deleteAllScore() = viewModelScope.launch {
