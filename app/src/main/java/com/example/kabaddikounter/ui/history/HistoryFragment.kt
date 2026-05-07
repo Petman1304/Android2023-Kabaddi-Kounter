@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.compose.ui.window.application
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -48,6 +49,13 @@ class HistoryFragment : Fragment() {
 
         historyViewModel.allScore.observe(viewLifecycleOwner){
             scores -> scoreAdapter.submitList(scores)
+        }
+
+        historyViewModel.toastMessage.observe(viewLifecycleOwner){
+            message -> message?.let{
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            historyViewModel.onToastShown()
+        }
         }
 
         return root
