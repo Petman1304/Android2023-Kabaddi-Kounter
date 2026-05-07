@@ -47,7 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Team B"
-        android:text="Team B"
+        android:text="@={viewModel.teamB}"
         android:textSize="34sp"
         app:layout_constraintBottom_toTopOf="@+id/scoreB"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Team A"
-        android:text="Team A"
+        android:text="@={viewModel.teamA}"
         android:textSize="34sp"
         app:layout_constraintBottom_toTopOf="@+id/scoreA"
         app:layout_constraintEnd_toStartOf="@+id/textView2"
@@ -176,7 +176,7 @@
         android:id="@+id/textView3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="vs"
+        android:text="@{viewModel.teamA.toString() + ` vs ` + viewModel.teamB.toString()}"
         android:textSize="28sp"
         android:gravity="center_horizontal"
         android:layout_marginTop="16dp"
@@ -184,12 +184,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
-
-
-
-
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

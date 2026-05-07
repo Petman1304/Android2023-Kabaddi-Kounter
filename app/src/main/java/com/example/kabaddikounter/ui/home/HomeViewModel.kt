@@ -6,6 +6,9 @@ import androidx.lifecycle.ViewModel
 
 class HomeViewModel : ViewModel() {
 
+    val teamA = MutableLiveData<String>("Team A")
+    val teamB = MutableLiveData<String>("Team B")
+
     private val _scoreA = MutableLiveData<Int>(0)
     val scoreA:LiveData<Int> get() = _scoreA
 
