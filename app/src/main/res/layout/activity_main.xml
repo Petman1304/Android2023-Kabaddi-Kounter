@@ -1,213 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <data>
-        <variable
-            name="viewModel"
-            type="com.example.kabaddikounter.viewModels.ScoreViewModel" />
-    </data>
-    <androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <!--    android:paddingTop="?attr/actionBarSize"-->
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="?android:attr/windowBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
+
+    <fragment
+        android:id="@+id/nav_host_fragment_activity_main"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
-        <TextView
-            android:id="@+id/scoreA"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:textSize="34sp"
-            android:text="@{viewModel.scoreA.toString()}"
-            app:layout_constraintBottom_toTopOf="@+id/buttonTeamA1"
-            app:layout_constraintEnd_toStartOf="@+id/scoreB"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-        <TextView
-            android:id="@+id/scoreB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:textSize="34sp"
-            android:text="@{viewModel.scoreB.toString()}"
-            app:layout_constraintBottom_toTopOf="@+id/buttonTeamB1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/scoreA"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-        <EditText
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Team B"
-            android:text="@={viewModel.teamB}"
-            android:textSize="34sp"
-            app:layout_constraintBottom_toTopOf="@+id/scoreB"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/textView"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed" />
-
-        <EditText
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Team A"
-            android:text="@={viewModel.teamA}"
-            android:textSize="34sp"
-            app:layout_constraintBottom_toTopOf="@+id/scoreA"
-            app:layout_constraintEnd_toStartOf="@+id/textView2"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed" />
-
-        <Button
-            android:id="@+id/buttonTeamA1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="+1"
-            android:onClick="@{() -> viewModel.incrementScoreA(1)}"
-            app:layout_constraintBottom_toTopOf="@+id/buttonTeamA2"
-            app:layout_constraintEnd_toStartOf="@+id/buttonTeamB1"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scoreA" />
-
-        <Button
-            android:id="@+id/buttonTeamB1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="+1"
-            android:onClick="@{() -> viewModel.incrementScoreB(1)}"
-            app:layout_constraintBottom_toTopOf="@+id/buttonTeamB2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/buttonTeamA1"
-            app:layout_constraintTop_toBottomOf="@+id/scoreB" />
-
-        <Button
-            android:id="@+id/buttonTeamA2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="+2"
-            android:onClick="@{() -> viewModel.incrementScoreA(2)}"
-            app:layout_constraintBottom_toTopOf="@+id/buttonReset"
-            app:layout_constraintEnd_toStartOf="@+id/buttonTeamB2"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonTeamA1" />
-
-        <Button
-            android:id="@+id/buttonTeamB2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="+2"
-            android:onClick="@{() -> viewModel.incrementScoreB(2)}"
-            app:layout_constraintBottom_toTopOf="@+id/buttonReset"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/buttonTeamA2"
-            app:layout_constraintTop_toBottomOf="@+id/buttonTeamB1" />
-
-        <Button
-            android:id="@+id/saveButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{() -> viewModel.insertScore()}"
-            android:text="Save Score"
-            app:layout_constraintBottom_toTopOf="@id/buttonReset"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/buttonTeamB2" />
-
-        <Button
-            android:id="@+id/buttonReset"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Reset"
-            android:onClick="@{() -> viewModel.reset()}"
-            app:layout_constraintBottom_toTopOf="@id/textView3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.52"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/saveButton"
-            />
-
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:constraint_referenced_ids="textView" />
-
-<!--        <EditText-->
-<!--            android:id="@+id/editText"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="16dp"-->
-<!--            android:ems="10"-->
-<!--            android:inputType="text"-->
-<!--            android:text="@={viewModel.textExample}"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/buttonReset" />-->
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@{viewModel.teamA.toString() + ` vs ` + viewModel.teamB.toString()}"
-            android:textSize="28sp"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/buttonReset"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/switchBtn"/>
-
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/switchBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="@={viewModel.darkMode}"
-            android:onCheckedChanged="@{(button, isChecked) -> viewModel.changeMode(isChecked)}"
-            app:layout_constraintBottom_toTopOf="@id/scoreRecyclerView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView3"
-            />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/scoreRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/switchBtn"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/saveFileButton"/>
-
-        <Button
-            android:id="@+id/saveFileButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Save as Json"
-            android:onClick="@{() -> viewModel.writeToJsonFile()}"
-            app:layout_constraintTop_toBottomOf="@id/scoreRecyclerView"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
+        android:visibility="visible"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@id/nav_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/mobile_navigation"
+        android:layout_marginBottom="?actionBarSize"/>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>

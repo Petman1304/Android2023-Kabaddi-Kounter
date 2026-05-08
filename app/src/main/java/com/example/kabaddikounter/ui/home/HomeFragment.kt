@@ -1,0 +1,54 @@
+package com.example.kabaddikounter.ui.home
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.example.kabaddikounter.MyApplication
+import com.example.kabaddikounter.databinding.FragmentHomeBinding
+
+class HomeFragment : Fragment() {
+
+    private var _binding: FragmentHomeBinding? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        val homeViewModel =
+            ViewModelProvider(
+                requireActivity(),
+                HomeViewModelFactory(
+                    (requireActivity().application as MyApplication).scoreRepository)
+            ).get(HomeViewModel::class.java)
+
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        binding.viewModel = homeViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
+        homeViewModel.toastMessage.observe(viewLifecycleOwner) {
+            message -> message?.let{
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            homeViewModel.onToastShown()
+        }
+        }
+
+
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}

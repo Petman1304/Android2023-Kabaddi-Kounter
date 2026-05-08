@@ -13,7 +13,7 @@ import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
+//import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.delay
 import androidx.core.content.edit
@@ -37,8 +37,6 @@ class ScoreViewModel(private val sharedPreferences: SharedPreferences, private v
 
     val darkMode = MutableLiveData<Boolean>(false)
 
-    lateinit var allScore: LiveData<List<Score>>
-
     val teamA = repository.teamA
     val teamB = repository.teamB
 
@@ -52,7 +50,6 @@ class ScoreViewModel(private val sharedPreferences: SharedPreferences, private v
 
     init {
         darkMode.value = sharedPreferences.getBoolean("isDarkMode", false)
-        addScoretoList()
         viewModelScope.launch {
             val lastScore : Score? = repository.getLatestScore()
 
@@ -73,8 +70,7 @@ class ScoreViewModel(private val sharedPreferences: SharedPreferences, private v
 
     }
 
-    private val _toastMessage = MutableLiveData<String?>()
-    val toastMessage: LiveData<String?> get() = _toastMessage
+
 
     fun incrementScoreA(points: Int = 1) {
         _scoreA.value = _scoreA.value!! + points
@@ -104,64 +100,15 @@ class ScoreViewModel(private val sharedPreferences: SharedPreferences, private v
         teamB.value = "";
     }
 
-    fun addScoretoList() = viewModelScope.launch {
-        allScore = repository.allScore.asLiveData()
-    }
 
-    fun insertScore() = viewModelScope.launch {
-        val score = Score(
-            teamId = 0,
-            teamAName = teamA.value.toString(),
-            teamBName = teamB.value.toString(),
-            teamAScore = scoreA.value,
-            teamBScore = scoreB.value,
-            timestamp = null,
-        )
-        withContext(Dispatchers.IO){
-            repository.insertScore(score)
-        }
-    }
+
+
+
 
     fun deleteAllScore() = viewModelScope.launch {
         withContext(Dispatchers.IO){
             repository.deleteAll()
         }
-    }
-
-    fun scoresToJson() : String? {
-        val gson = Gson()
-        val data = allScore.value
-
-        return if (data!=null) {
-            gson.toJson(data)
-        } else {
-            "[]"
-        }
-    }
-
-    private fun getRandomFileName(): String {
-        return Calendar.getInstance().timeInMillis.toString() + ".json"
-    }
-
-    fun writeToJsonFile() {
-        val jsonText = scoresToJson()
-        if(jsonText != ""){
-            val dir = File("//sdcard//Documents//")
-            val extFile = File(dir, getRandomFileName())
-            var fos : FileOutputStream? = null
-            try{
-                fos = FileOutputStream(extFile)
-                fos.write(jsonText?.toByteArray())
-                fos.close()
-            } catch (e: IOException){
-                e.printStackTrace()
-            }
-            _toastMessage.value = "File saved. $extFile"
-        }
-    }
-
-    fun onToastShown(){
-        _toastMessage.value = null
     }
 
 }
