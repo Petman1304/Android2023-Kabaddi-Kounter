@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var repository: ScoreRepository
     private lateinit var scoreAdapter: ScoreAdapter
 
-    val viewModel: ScoreViewModel by viewModels() {
+    val viewModel: ScoreViewModel by viewModels {
         ViewModelFactory(getSharedPreferences("DarkMode", Context.MODE_PRIVATE),
             (application as MyApplication).scoreRepository)
     }
@@ -74,23 +74,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-
-
-
-//
-//        sharedPreferences = getSharedPreferences("DarkMode", Context.MODE_PRIVATE)
-//
-//        val isDarkMode = sharedPreferences.getBoolean("isDarkMode", false)
-//
-//        binding.switchBtn.isChecked = isDarkMode
-//
-//        if(isDarkMode) {
-//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-//        }
-//        else
-//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-//
-//        isStoragePermissionGranted()
+        isStoragePermissionGranted()
 //
 //        viewModel.toastMessage.observe(this) {
 //            message -> message?.let{
@@ -106,17 +90,18 @@ class MainActivity : AppCompatActivity() {
 //        }
 //    }
 //
-//    private fun isStoragePermissionGranted(): Boolean {
-//        val permission = Manifest.permission.WRITE_EXTERNAL_STORAGE
-//
-//        return if (ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED) {
-//            true
-//        } else {
-//            ActivityCompat.requestPermissions(this, arrayOf(permission), 1)
-//            false
-//        }
+
     }
 
+    private fun isStoragePermissionGranted(): Boolean {
+        val permission = Manifest.permission.WRITE_EXTERNAL_STORAGE
 
-
+        return if (ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED) {
+            true
+        } else {
+            ActivityCompat.requestPermissions(this, arrayOf(permission), 1)
+            false
+        }
+    }
 }
+

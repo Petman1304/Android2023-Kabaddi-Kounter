@@ -13,5 +13,6 @@
         android:summary="@string/dark_mode_summary"
         />
 
+
 </androidx.preference.PreferenceScreen>
 

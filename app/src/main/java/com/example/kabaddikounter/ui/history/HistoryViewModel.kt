@@ -48,21 +48,25 @@ class HistoryViewModel(scoreRepository: ScoreRepository) : ViewModel() {
     }
 
     fun writeToJsonFile() {
-        val jsonText = scoresToJson()
-        if(jsonText != ""){
-            val dir = File("//sdcard//Documents//")
-            val extFile = File(dir, getRandomFileName())
-            var fos : FileOutputStream? = null
-            try{
-                fos = FileOutputStream(extFile)
-                fos.write(jsonText?.toByteArray())
-                fos.close()
-            } catch (e: IOException){
-                e.printStackTrace()
+        if(isStoragePermissionGranted())
+        {
+            val jsonText = scoresToJson()
+            if (jsonText != "") {
+                val dir = File("//sdcard//Documents//")
+                val extFile = File(dir, getRandomFileName())
+                var fos: FileOutputStream? = null
+                try {
+                    fos = FileOutputStream(extFile)
+                    fos.write(jsonText?.toByteArray())
+                    fos.close()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+                _toastMessage.value = "File saved. $extFile"
             }
-            _toastMessage.value = "File saved. $extFile"
         }
     }
+
 
     fun onToastShown(){
         _toastMessage.value = null
