@@ -75,6 +75,7 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         isStoragePermissionGranted()
+        isNotificationPermissionGranted()
 //
 //        viewModel.toastMessage.observe(this) {
 //            message -> message?.let{
@@ -103,5 +104,18 @@ class MainActivity : AppCompatActivity() {
             false
         }
     }
+
+    private fun isNotificationPermissionGranted(): Boolean {
+        val permission = Manifest.permission.POST_NOTIFICATIONS
+
+        return  if (ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED){
+            true
+        }else{
+            ActivityCompat.requestPermissions(this, arrayOf(permission), 1)
+            false
+        }
+    }
+
+
 }
 

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "217316715816",
+    "project_id": "skibidi-kounter",
+    "storage_bucket": "skibidi-kounter.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:217316715816:android:fc958d9612f0265c08741d",
+        "android_client_info": {
+          "package_name": "com.example.kabaddikounter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4G0rjD6aFaGZ7KDCPDv7B56jtY0tNWKI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
