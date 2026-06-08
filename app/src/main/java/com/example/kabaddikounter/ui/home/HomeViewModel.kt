@@ -2,16 +2,17 @@ package com.example.kabaddikounter.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.kabaddikounter.Status
 import com.example.kabaddikounter.data.entities.Score
 import com.example.kabaddikounter.repository.ScoreRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class HomeViewModel(scoreRepository: ScoreRepository) : ViewModel() {
-
+class HomeViewModel(scoreRepository: ScoreRepository, savedStateHandle: SavedStateHandle) : ViewModel() {
     val repository = scoreRepository
 
     val teamA = MutableLiveData<String>("Team A")
@@ -25,6 +26,17 @@ class HomeViewModel(scoreRepository: ScoreRepository) : ViewModel() {
 
     private val _scoreB = MutableLiveData<Int>(0)
     val scoreB:LiveData<Int> get() = _scoreB
+
+    fun getScore() : Score {
+        return Score(
+            teamId = 0,
+            teamAName = teamA.value,
+            teamBName = teamB.value,
+            teamAScore = scoreA.value,
+            teamBScore = scoreB.value,
+            status = Status.OFFLINE
+        )
+    }
 
 
     fun incrementScoreA(points: Int = 1) {
@@ -49,7 +61,7 @@ class HomeViewModel(scoreRepository: ScoreRepository) : ViewModel() {
             teamBName = teamB.value.toString(),
             teamAScore = scoreA.value,
             teamBScore = scoreB.value,
-            timestamp = null,
+            status = Status.OFFLINE
         )
         withContext(Dispatchers.IO){
             repository.insertScore(score)
@@ -59,5 +71,12 @@ class HomeViewModel(scoreRepository: ScoreRepository) : ViewModel() {
 
     fun onToastShown(){
         _toastMessage.value = null
+    }
+
+    fun loadData(match: Score?) {
+        teamA.value = match?.teamAName.toString()
+        teamB.value = match?.teamBName.toString()
+        _scoreA.value = match?.teamAScore?.toInt()
+        _scoreB.value = match?.teamBScore?.toInt()
     }
 }

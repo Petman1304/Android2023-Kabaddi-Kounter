@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 class ScoreRepository(private val scoreLocalSource: ScoreLocalSource) {
 
     val allScore: Flow<List<Score>> = scoreLocalSource.getAllScore()
+
     val teamA = MutableLiveData<String>("Team A")
     fun getTeamA(): String = teamA.value.toString()
     fun setTeamA(name : String){ teamA.value = name }

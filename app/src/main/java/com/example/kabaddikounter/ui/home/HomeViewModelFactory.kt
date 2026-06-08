@@ -3,11 +3,18 @@ package com.example.kabaddikounter.ui.home
 import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.createSavedStateHandle
+import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.kabaddikounter.repository.ScoreRepository
 
 class HomeViewModelFactory(private val scoreRepository: ScoreRepository) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return HomeViewModel(scoreRepository) as T
+    override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
+        if (modelClass.isAssignableFrom(HomeViewModel::class.java)){
+            val savedStateHandle = extras.createSavedStateHandle()
+
+            return HomeViewModel(scoreRepository, savedStateHandle) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModelClass")
     }
 
 
