@@ -3,14 +3,25 @@ package com.example.kabaddikounter.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.kabaddikounter.Status
 import com.example.kabaddikounter.data.entities.Score
+import com.example.kabaddikounter.repository.ScoreRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class SharedViewModel : ViewModel() {
-    val _score = MutableLiveData<Score>(Score(0, "Team A", "Team B", 0, 0, Status.OFFLINE))
+class SharedViewModel(scoreRepository: ScoreRepository) : ViewModel() {
+    val _score = MutableLiveData<Score>(scoreRepository.score.value)
+    val repository = scoreRepository
 
     fun setScore(score: Score) {
         _score.value = score
+        viewModelScope.launch{
+            withContext(Dispatchers.Main){
+                repository.updateScore(score)
+            }
+    }
     }
 
     val teamA = MutableLiveData<String>("Team A")

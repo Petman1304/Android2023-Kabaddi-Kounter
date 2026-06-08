@@ -30,6 +30,7 @@ import com.example.kabaddikounter.ui.ScoreAdapter
 import com.example.kabaddikounter.viewModels.ScoreViewModel
 import com.example.kabaddikounter.viewModels.SharedViewModel
 import com.example.kabaddikounter.viewModels.ViewModelFactory
+import com.example.kabaddikounter.viewModels.SharedViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.messaging.FirebaseMessaging
 
@@ -45,7 +46,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var repository: ScoreRepository
     private lateinit var scoreAdapter: ScoreAdapter
 
-    private val sharedViewModel: SharedViewModel by viewModels()
+    private val sharedViewModel: SharedViewModel by viewModels {
+        SharedViewModelFactory(
+            (application as MyApplication).scoreRepository
+        )
+    }
 
     val viewModel: ScoreViewModel by viewModels {
         ViewModelFactory(getSharedPreferences("DarkMode", Context.MODE_PRIVATE),

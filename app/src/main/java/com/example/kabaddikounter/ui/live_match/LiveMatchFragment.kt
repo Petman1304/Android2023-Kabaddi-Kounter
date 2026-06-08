@@ -12,18 +12,23 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kabaddikounter.ApiInterface
+import com.example.kabaddikounter.MyApplication
 import com.example.kabaddikounter.RetrofitInst
 import com.example.kabaddikounter.databinding.FragmentLiveMatchBinding
 import com.example.kabaddikounter.ui.LiveMatchAdapter
 import com.example.kabaddikounter.ui.ScoreAdapter
 import com.example.kabaddikounter.viewModels.SharedViewModel
+import com.example.kabaddikounter.viewModels.SharedViewModelFactory
 
 class LiveMatchFragment : Fragment() {
 
     private var _binding: FragmentLiveMatchBinding? = null
     private lateinit var apiInterface: ApiInterface
-
-    private val sharedViewModel: SharedViewModel by activityViewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels {
+        SharedViewModelFactory(
+            (requireActivity().application as MyApplication).scoreRepository
+        )
+    }
 
     // This property is only valid between onCreateView and
     // onDestroyView.

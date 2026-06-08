@@ -1,6 +1,8 @@
 package com.example.kabaddikounter.repository
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.kabaddikounter.Status
 import com.example.kabaddikounter.data.entities.Score
 import com.example.kabaddikounter.datasource.ScoreLocalSource
 import kotlinx.coroutines.flow.Flow
@@ -25,6 +27,12 @@ class ScoreRepository(private val scoreLocalSource: ScoreLocalSource) {
     fun getScoreB() : Int = scoreB.value!!
     fun setScoreB(score : Int) {scoreB.value = score}
 
+    private val _score = MutableLiveData<Score>(Score(0, "Team A", "Team B", 0, 0, Status.OFFLINE))
+    val score: LiveData<Score> = _score
+
+    fun updateScore(newScore: Score){
+        _score.value = newScore
+    }
 
     fun insertScore(score: Score){
         scoreLocalSource.insert(score)

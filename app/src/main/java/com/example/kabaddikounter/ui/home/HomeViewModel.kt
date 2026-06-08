@@ -15,17 +15,22 @@ import kotlinx.coroutines.withContext
 class HomeViewModel(scoreRepository: ScoreRepository, savedStateHandle: SavedStateHandle) : ViewModel() {
     val repository = scoreRepository
 
-    val teamA = MutableLiveData<String>("Team A")
-    val teamB = MutableLiveData<String>("Team B")
+    val score: LiveData<Score> = repository.score
+
+    val teamA = MutableLiveData<String>(score.value?.teamAName)
+    val teamB = MutableLiveData<String>(score.value?.teamBName)
 
     private val _toastMessage = MutableLiveData<String?>()
     val toastMessage: LiveData<String?> get() = _toastMessage
 
-    private val _scoreA = MutableLiveData<Int>(0)
+    private val _scoreA = MutableLiveData<Int>(score.value?.teamAScore)
     val scoreA:LiveData<Int> get() = _scoreA
 
-    private val _scoreB = MutableLiveData<Int>(0)
+    private val _scoreB = MutableLiveData<Int>(score.value?.teamBScore)
     val scoreB:LiveData<Int> get() = _scoreB
+
+    private val _status = MutableLiveData<String>(score.value?.status.toString())
+    val status: LiveData<String> get() = _status
 
     fun getScore() : Score {
         return Score(
@@ -36,6 +41,14 @@ class HomeViewModel(scoreRepository: ScoreRepository, savedStateHandle: SavedSta
             teamBScore = scoreB.value,
             status = Status.OFFLINE
         )
+    }
+
+    fun updateScore() {
+        viewModelScope.launch {
+            withContext(Dispatchers.Main) {
+                repository.updateScore(getScore())
+            }
+        }
     }
 
 

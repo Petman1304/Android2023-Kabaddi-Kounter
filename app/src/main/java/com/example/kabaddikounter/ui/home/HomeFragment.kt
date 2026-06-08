@@ -13,12 +13,17 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.kabaddikounter.MyApplication
 import com.example.kabaddikounter.databinding.FragmentHomeBinding
 import com.example.kabaddikounter.viewModels.SharedViewModel
+import com.example.kabaddikounter.viewModels.SharedViewModelFactory
 import kotlin.getValue
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-    private val sharedViewModel: SharedViewModel by activityViewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels {
+        SharedViewModelFactory(
+            (requireActivity().application as MyApplication).scoreRepository
+        )
+    }
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -69,6 +74,7 @@ class HomeFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
+//        sharedViewModel.setScore(homeViewModel.getScore())
         sharedViewModel.setScore(homeViewModel.getScore())
     }
     override fun onDestroyView() {
