@@ -17,6 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import com.example.kabaddikounter.Converters
 
 
 class FCMService: FirebaseMessagingService() {
@@ -28,6 +29,8 @@ class FCMService: FirebaseMessagingService() {
     private val serviceScope = CoroutineScope(
         SupervisorJob() + Dispatchers.IO
     )
+
+    val converters = Converters()
 
     override fun onDestroy() {
         super.onDestroy()
@@ -82,7 +85,7 @@ class FCMService: FirebaseMessagingService() {
                 message.data["teamBName"],
                 message.data["teamAScore"]?.toIntOrNull(),
                 message.data["teamBScore"]?.toIntOrNull(),
-                Status.END
+                converters.toStatus(message.data["status"]!!)
             )
             Log.d("FCM", newScore.toString())
             repository.updateScore(newScore)

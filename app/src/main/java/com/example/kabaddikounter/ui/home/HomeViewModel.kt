@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.kabaddikounter.Converters
 import com.example.kabaddikounter.Status
 import com.example.kabaddikounter.data.entities.Score
 import com.example.kabaddikounter.repository.ScoreRepository
@@ -42,7 +43,7 @@ class HomeViewModel(scoreRepository: ScoreRepository) : ViewModel() {
             teamBName = teamB.value,
             teamAScore = scoreA.value,
             teamBScore = scoreB.value,
-            status = Status.OFFLINE
+            status = Converters().toStatus(status.value!!)
         )
     }
 

@@ -45,12 +45,6 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-//        val homeViewModel =
-//            ViewModelProvider(
-//                requireActivity(),
-//                HomeViewModelFactory(
-//                    (requireActivity().application as MyApplication).scoreRepository)
-//            ).get(HomeViewModel::class.java)
         repository = (requireActivity().application as MyApplication).scoreRepository
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -66,8 +60,6 @@ class HomeFragment : Fragment() {
         }
         }
 
-
-
         return binding.root
     }
 
@@ -78,16 +70,10 @@ class HomeFragment : Fragment() {
             score -> homeViewModel.loadData(score)
             Log.d("HOME", "Observer: $score")
         }
-
-//        sharedViewModel._score.observe(viewLifecycleOwner) {
-//           score -> homeViewModel.loadData(score)
-//            homeViewModel.updateBtn(score.status.toString())
-//        }
     }
 
     override fun onPause() {
         super.onPause()
-//        sharedViewModel.setScore(homeViewModel.getScore())
         sharedViewModel.setScore(homeViewModel.getScore())
     }
     override fun onDestroyView() {

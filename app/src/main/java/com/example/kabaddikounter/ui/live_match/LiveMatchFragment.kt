@@ -62,12 +62,6 @@ class LiveMatchFragment : Fragment() {
             adapter = liveMatchAdapter
         }
 
-        val textView: TextView = binding.textNotifications
-        liveMatchViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
-
-
         liveMatchViewModel.matches.observe(viewLifecycleOwner) {
             match -> liveMatchAdapter.submitList(match)
         }
