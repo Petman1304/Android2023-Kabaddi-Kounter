@@ -9,13 +9,13 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ScoreDao {
-    @Query("SELECT * FROM score ORDER BY teamId DESC")
+    @Query("SELECT * FROM score ORDER BY id DESC")
     fun getAll() : Flow<List<Score>>
 
-    @Query("SELECT * FROM score ORDER BY teamId DESC LIMIT 1")
+    @Query("SELECT * FROM score ORDER BY id DESC LIMIT 1")
     suspend fun getLatestScore() : Score?
 
-    @Query("SELECT * FROM score WHERE teamId IN (:id)")
+    @Query("SELECT * FROM score WHERE id IN (:id)")
     fun loadAllByIds(id: IntArray): List<Score>
 
     @Query("SELECT * FROM score WHERE teamA_name LIKE :teamname LIMIT 1")
@@ -24,7 +24,7 @@ interface ScoreDao {
     @Insert
     fun insertAll(vararg scores: Score)
 
-    @Query("DELETE FROM score WHERE teamId IN (:scoreId)")
+    @Query("DELETE FROM score WHERE id IN (:scoreId)")
     fun delete(scoreId: List<Int>)
 
     @Query("DELETE FROM score")

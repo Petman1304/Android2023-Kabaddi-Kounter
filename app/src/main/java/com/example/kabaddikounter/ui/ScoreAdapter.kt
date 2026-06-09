@@ -39,7 +39,7 @@ class ScoreAdapter(var context: Context) : ListAdapter<Score, ScoreAdapter.ViewH
         }
 
         override fun areItemsTheSame(oldItem: Score, newItem: Score): Boolean {
-            return oldItem.teamId == newItem.teamId
+            return oldItem.id == newItem.id
         }
     }
 

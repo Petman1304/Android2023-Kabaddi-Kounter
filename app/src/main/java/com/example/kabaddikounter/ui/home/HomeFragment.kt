@@ -1,27 +1,31 @@
 package com.example.kabaddikounter.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.compose.ui.window.application
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.kabaddikounter.MyApplication
 import com.example.kabaddikounter.databinding.FragmentHomeBinding
+import com.example.kabaddikounter.repository.ScoreRepository
 import com.example.kabaddikounter.viewModels.SharedViewModel
 import com.example.kabaddikounter.viewModels.SharedViewModelFactory
 import kotlin.getValue
 
 class HomeFragment : Fragment() {
+    lateinit var repository: ScoreRepository
 
     private var _binding: FragmentHomeBinding? = null
     private val sharedViewModel: SharedViewModel by activityViewModels {
         SharedViewModelFactory(
-            (requireActivity().application as MyApplication).scoreRepository
+            repository
         )
     }
 
@@ -31,7 +35,7 @@ class HomeFragment : Fragment() {
 
     private val homeViewModel: HomeViewModel by viewModels{
         HomeViewModelFactory(
-            (requireActivity().application as MyApplication).scoreRepository
+            repository
         )
     }
 
@@ -47,6 +51,7 @@ class HomeFragment : Fragment() {
 //                HomeViewModelFactory(
 //                    (requireActivity().application as MyApplication).scoreRepository)
 //            ).get(HomeViewModel::class.java)
+        repository = (requireActivity().application as MyApplication).scoreRepository
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
@@ -61,15 +66,23 @@ class HomeFragment : Fragment() {
         }
         }
 
+
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        sharedViewModel._score.observe(viewLifecycleOwner) {
-           score -> homeViewModel.loadData(score)
+        repository.score.observe(viewLifecycleOwner) {
+            score -> homeViewModel.loadData(score)
+            Log.d("HOME", "Observer: $score")
         }
+
+//        sharedViewModel._score.observe(viewLifecycleOwner) {
+//           score -> homeViewModel.loadData(score)
+//            homeViewModel.updateBtn(score.status.toString())
+//        }
     }
 
     override fun onPause() {

@@ -9,12 +9,7 @@ import com.example.kabaddikounter.repository.ScoreRepository
 
 class HomeViewModelFactory(private val scoreRepository: ScoreRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
-        if (modelClass.isAssignableFrom(HomeViewModel::class.java)){
-            val savedStateHandle = extras.createSavedStateHandle()
-
-            return HomeViewModel(scoreRepository, savedStateHandle) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModelClass")
+        return HomeViewModel(scoreRepository) as T
     }
 
 

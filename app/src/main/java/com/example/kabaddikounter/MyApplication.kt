@@ -8,6 +8,7 @@ import com.example.kabaddikounter.data.entities.Score
 import com.example.kabaddikounter.database.AppDatabase
 import com.example.kabaddikounter.datasource.ScoreLocalSource
 import com.example.kabaddikounter.repository.ScoreRepository
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.withContext
@@ -24,11 +25,16 @@ class MyApplication: Application() {
         val channel = NotificationChannel(
             "ForegroundServiceChannel",
             "Foreground Service Channel",
-            NotificationManager.IMPORTANCE_DEFAULT
+            NotificationManager.IMPORTANCE_HIGH
         )
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
+    }
+
+    override fun onTerminate() {
+        super.onTerminate()
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("testtopic")
     }
 
 }

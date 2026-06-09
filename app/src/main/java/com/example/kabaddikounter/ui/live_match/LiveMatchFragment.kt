@@ -15,10 +15,12 @@ import com.example.kabaddikounter.ApiInterface
 import com.example.kabaddikounter.MyApplication
 import com.example.kabaddikounter.RetrofitInst
 import com.example.kabaddikounter.databinding.FragmentLiveMatchBinding
+import com.example.kabaddikounter.service.FCMService
 import com.example.kabaddikounter.ui.LiveMatchAdapter
 import com.example.kabaddikounter.ui.ScoreAdapter
 import com.example.kabaddikounter.viewModels.SharedViewModel
 import com.example.kabaddikounter.viewModels.SharedViewModelFactory
+import com.google.firebase.messaging.FirebaseMessaging
 
 class LiveMatchFragment : Fragment() {
 
@@ -48,6 +50,7 @@ class LiveMatchFragment : Fragment() {
         val liveMatchAdapter = LiveMatchAdapter(requireContext()) {
             match -> val action = LiveMatchFragmentDirections.actionLiveMatchFragmentToHomeFragment()
             sharedViewModel.setScore(match)
+            sharedViewModel.subscribeTopic(requireContext().applicationContext, "match_${match.id}")
             findNavController().navigate(action)
         }
 

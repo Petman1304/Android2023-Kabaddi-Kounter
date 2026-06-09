@@ -31,7 +31,7 @@ class ScoreRepository(private val scoreLocalSource: ScoreLocalSource) {
     val score: LiveData<Score> = _score
 
     fun updateScore(newScore: Score){
-        _score.value = newScore
+        _score.postValue(newScore)
     }
 
     fun insertScore(score: Score){

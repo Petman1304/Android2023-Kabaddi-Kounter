@@ -12,7 +12,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 @Entity
 data class Score(
-    @PrimaryKey(autoGenerate = true) val teamId: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int,
     @ColumnInfo(name = "teamA_name") val teamAName: String?,
     @ColumnInfo(name = "teamB_name") val teamBName: String?,
     @ColumnInfo(name = "teamA_score") val teamAScore: Int?,
