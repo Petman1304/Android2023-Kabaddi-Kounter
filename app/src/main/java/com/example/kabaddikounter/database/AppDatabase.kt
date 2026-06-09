@@ -4,11 +4,14 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.example.kabaddikounter.Converters
 import com.example.kabaddikounter.dao.ScoreDao
 import com.example.kabaddikounter.data.entities.Score
 import kotlinx.coroutines.CoroutineScope
 
 @Database(entities = [Score::class], version = 1)
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun scoreDao(): ScoreDao
 
@@ -33,3 +36,7 @@ abstract class AppDatabase : RoomDatabase() {
         }
     }
 }
+
+
+
+

@@ -1,16 +1,25 @@
 package com.example.kabaddikounter.data.entities
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverter
+import androidx.versionedparcelable.VersionedParcelize
+import com.example.kabaddikounter.Status
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity
 data class Score(
-    @PrimaryKey(autoGenerate = true) val teamId: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int,
     @ColumnInfo(name = "teamA_name") val teamAName: String?,
     @ColumnInfo(name = "teamB_name") val teamBName: String?,
     @ColumnInfo(name = "teamA_score") val teamAScore: Int?,
     @ColumnInfo(name = "teamB_score") val teamBScore: Int?,
-    @ColumnInfo(name = "timestamp") val timestamp: String?
-)
+    @ColumnInfo(name = "status") val status: Status?
+) : Parcelable
+
+
+
 

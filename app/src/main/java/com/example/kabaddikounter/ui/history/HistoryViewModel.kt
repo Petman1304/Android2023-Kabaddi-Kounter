@@ -1,5 +1,9 @@
 package com.example.kabaddikounter.ui.history
 
+import android.Manifest
+import android.content.pm.PackageManager
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -48,21 +52,25 @@ class HistoryViewModel(scoreRepository: ScoreRepository) : ViewModel() {
     }
 
     fun writeToJsonFile() {
-        val jsonText = scoresToJson()
-        if(jsonText != ""){
-            val dir = File("//sdcard//Documents//")
-            val extFile = File(dir, getRandomFileName())
-            var fos : FileOutputStream? = null
-            try{
-                fos = FileOutputStream(extFile)
-                fos.write(jsonText?.toByteArray())
-                fos.close()
-            } catch (e: IOException){
-                e.printStackTrace()
+
+
+            val jsonText = scoresToJson()
+            if (jsonText != "") {
+                val dir = File("//sdcard//Documents//")
+                val extFile = File(dir, getRandomFileName())
+                var fos: FileOutputStream? = null
+                try {
+                    fos = FileOutputStream(extFile)
+                    fos.write(jsonText?.toByteArray())
+                    fos.close()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+                _toastMessage.value = "File saved. $extFile"
             }
-            _toastMessage.value = "File saved. $extFile"
-        }
+
     }
+
 
     fun onToastShown(){
         _toastMessage.value = null

@@ -24,11 +24,15 @@ import com.example.kabaddikounter.database.AppDatabase
 import com.example.kabaddikounter.databinding.ActivityMainBinding
 import com.example.kabaddikounter.datasource.ScoreLocalSource
 import com.example.kabaddikounter.repository.ScoreRepository
-import com.example.kabaddikounter.service.LiveScoreService
+import com.example.kabaddikounter.service.FCMService
 import com.example.kabaddikounter.ui.ScoreAdapter
 import com.example.kabaddikounter.viewModels.ScoreViewModel
+import com.example.kabaddikounter.viewModels.SharedViewModel
 import com.example.kabaddikounter.viewModels.ViewModelFactory
+import com.example.kabaddikounter.viewModels.SharedViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.messaging.FirebaseMessaging
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -41,7 +45,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var repository: ScoreRepository
     private lateinit var scoreAdapter: ScoreAdapter
 
-    val viewModel: ScoreViewModel by viewModels() {
+    private val sharedViewModel: SharedViewModel by viewModels {
+        SharedViewModelFactory(
+            (application as MyApplication).scoreRepository
+        )
+    }
+
+    val viewModel: ScoreViewModel by viewModels {
         ViewModelFactory(getSharedPreferences("DarkMode", Context.MODE_PRIVATE),
             (application as MyApplication).scoreRepository)
     }
@@ -49,9 +59,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-//        binding.viewModel = viewModel
-//        binding.lifecycleOwner = this
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -74,23 +82,11 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+        isStoragePermissionGranted()
+        isNotificationPermissionGranted()
 
+        subscribeTopic(this, "testtopic")
 
-
-//
-//        sharedPreferences = getSharedPreferences("DarkMode", Context.MODE_PRIVATE)
-//
-//        val isDarkMode = sharedPreferences.getBoolean("isDarkMode", false)
-//
-//        binding.switchBtn.isChecked = isDarkMode
-//
-//        if(isDarkMode) {
-//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-//        }
-//        else
-//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-//
-//        isStoragePermissionGranted()
 //
 //        viewModel.toastMessage.observe(this) {
 //            message -> message?.let{
@@ -106,17 +102,47 @@ class MainActivity : AppCompatActivity() {
 //        }
 //    }
 //
-//    private fun isStoragePermissionGranted(): Boolean {
-//        val permission = Manifest.permission.WRITE_EXTERNAL_STORAGE
-//
-//        return if (ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED) {
-//            true
-//        } else {
-//            ActivityCompat.requestPermissions(this, arrayOf(permission), 1)
-//            false
-//        }
+
+    }
+
+    private fun isStoragePermissionGranted(): Boolean {
+        val permission = Manifest.permission.WRITE_EXTERNAL_STORAGE
+
+        return if (ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED) {
+            true
+        } else {
+            ActivityCompat.requestPermissions(this, arrayOf(permission), 1)
+            false
+        }
+    }
+
+    private fun isNotificationPermissionGranted(): Boolean {
+        val permission = Manifest.permission.POST_NOTIFICATIONS
+
+        return  if (ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED){
+            true
+        }else{
+            ActivityCompat.requestPermissions(this, arrayOf(permission), 1)
+            false
+        }
+    }
+
+    fun subscribeTopic(context: Context, topic: String){
+        FirebaseMessaging.getInstance().subscribeToTopic(topic).addOnSuccessListener {
+            Toast.makeText(context, "Subscribed to $topic", Toast.LENGTH_SHORT).show()
+        }.addOnFailureListener {
+            Toast.makeText(context, "Failed to subscribe to $topic", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun unsubscribeTopic(context: Context, topic:String){
+        FirebaseMessaging.getInstance().unsubscribeFromTopic(topic).addOnSuccessListener {
+            Toast.makeText(context, "Unsubscribed to $topic", Toast.LENGTH_SHORT).show()
+        }.addOnFailureListener {
+            Toast.makeText(context, "Failed to unsubscribed to $topic", Toast.LENGTH_SHORT).show()
+        }
     }
 
 
-
 }
+
