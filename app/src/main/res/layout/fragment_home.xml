@@ -20,6 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@{viewModel.status}"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/textView"
@@ -54,10 +55,11 @@
 
     <EditText
         android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Team B"
         android:text="@={viewModel.teamB}"
+        android:gravity="center_horizontal"
         android:textSize="34sp"
         app:layout_constraintBottom_toTopOf="@+id/scoreB"
         app:layout_constraintEnd_toEndOf="parent"
@@ -70,10 +72,11 @@
 
     <EditText
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Team A"
         android:text="@={viewModel.teamA}"
+        android:gravity="center_horizontal"
         android:textSize="34sp"
         app:layout_constraintBottom_toTopOf="@+id/scoreA"
         app:layout_constraintEnd_toStartOf="@+id/textView2"
