@@ -25,7 +25,6 @@ import com.example.kabaddikounter.databinding.ActivityMainBinding
 import com.example.kabaddikounter.datasource.ScoreLocalSource
 import com.example.kabaddikounter.repository.ScoreRepository
 import com.example.kabaddikounter.service.FCMService
-import com.example.kabaddikounter.service.LiveScoreService
 import com.example.kabaddikounter.ui.ScoreAdapter
 import com.example.kabaddikounter.viewModels.ScoreViewModel
 import com.example.kabaddikounter.viewModels.SharedViewModel

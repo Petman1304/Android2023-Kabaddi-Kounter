@@ -67,16 +67,6 @@ class FCMService: FirebaseMessagingService() {
 
         val body = "Score: ${message.data["teamAScore"]} - ${message.data["teamBScore"]}"
 
-//        val newScore = Score(
-//        message.data["matchId"]!!.toInt(),
-//        message.data["teamAName"],
-//        message.data["teamBName"],
-//        message.data["teamAScore"]?.toIntOrNull(),
-//        message.data["teamBName"]?.toIntOrNull(),
-//        Status.END
-//        )
-//        repository.updateScore(newScore)
-
 
         serviceScope.launch {
             val newScore = Score(

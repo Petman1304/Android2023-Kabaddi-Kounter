@@ -28,10 +28,6 @@
         </activity>
 
         <service
-            android:name=".service.LiveScoreService"
-            android:foregroundServiceType="dataSync"/>
-
-        <service
             android:name=".service.FCMService"
             android:exported="false">
             <intent-filter>
