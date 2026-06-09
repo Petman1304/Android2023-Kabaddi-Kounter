@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.ui.window.application
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -47,6 +48,7 @@ class MainActivity : AppCompatActivity() {
 
     private val sharedViewModel: SharedViewModel by viewModels {
         SharedViewModelFactory(
+            application,
             (application as MyApplication).scoreRepository
         )
     }
@@ -84,24 +86,6 @@ class MainActivity : AppCompatActivity() {
 
         isStoragePermissionGranted()
         isNotificationPermissionGranted()
-
-        subscribeTopic(this, "testtopic")
-
-//
-//        viewModel.toastMessage.observe(this) {
-//            message -> message?.let{
-//                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-//            viewModel.onToastShown()
-//
-//        }
-//        }
-//
-//        Intent(applicationContext, LiveScoreService::class.java).also {
-//            it.action = LiveScoreService.Action.START.toString()
-//            startService(it)
-//        }
-//    }
-//
 
     }
 

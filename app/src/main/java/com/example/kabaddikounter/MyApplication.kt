@@ -4,6 +4,8 @@ import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.SharedPreferences
+import androidx.preference.PreferenceManager
 import com.example.kabaddikounter.data.entities.Score
 import com.example.kabaddikounter.database.AppDatabase
 import com.example.kabaddikounter.datasource.ScoreLocalSource
@@ -19,6 +21,7 @@ class MyApplication: Application() {
     private val database by lazy { AppDatabase.getDatabase(this, applicationScope) }
     private val scoreLocalSource by lazy { ScoreLocalSource(database.scoreDao()) }
     val scoreRepository by lazy { ScoreRepository(scoreLocalSource) }
+    lateinit var prefs : SharedPreferences
 
     override fun onCreate() {
         super.onCreate()
@@ -28,13 +31,16 @@ class MyApplication: Application() {
             NotificationManager.IMPORTANCE_HIGH
         )
 
+        prefs = PreferenceManager.getDefaultSharedPreferences(this)
+
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
     }
 
     override fun onTerminate() {
         super.onTerminate()
-        FirebaseMessaging.getInstance().unsubscribeFromTopic("testtopic")
+        val topic = prefs.getString("current_topic", "")
+        FirebaseMessaging.getInstance().unsubscribeFromTopic(topic!!)
     }
 
 }

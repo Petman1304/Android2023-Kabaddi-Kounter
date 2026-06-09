@@ -25,6 +25,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val sharedViewModel: SharedViewModel by activityViewModels {
         SharedViewModelFactory(
+            requireActivity().application,
             repository
         )
     }

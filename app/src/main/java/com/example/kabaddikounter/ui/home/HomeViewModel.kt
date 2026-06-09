@@ -2,7 +2,6 @@ package com.example.kabaddikounter.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.kabaddikounter.Converters
@@ -98,6 +97,7 @@ class HomeViewModel(scoreRepository: ScoreRepository) : ViewModel() {
         _scoreA.value = match?.teamAScore?.toInt()
         _scoreB.value = match?.teamBScore?.toInt()
         _status.value = match?.status.toString()
+        updateBtn(status.value.toString())
     }
 
     fun updateBtn(status: String) {
